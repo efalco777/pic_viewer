@@ -21,7 +21,10 @@ mixin _$HomeState {
   int get selectedPage => throw _privateConstructorUsedError;
   int get selectedLimit => throw _privateConstructorUsedError;
   bool get isChangingPage => throw _privateConstructorUsedError;
+  bool get isInSearchMode => throw _privateConstructorUsedError;
+  bool get isSearchInProgress => throw _privateConstructorUsedError;
   String get authorQuery => throw _privateConstructorUsedError;
+  List<Pic> get searchResultPics => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -39,7 +42,10 @@ abstract class $HomeStateCopyWith<$Res> {
       int selectedPage,
       int selectedLimit,
       bool isChangingPage,
-      String authorQuery});
+      bool isInSearchMode,
+      bool isSearchInProgress,
+      String authorQuery,
+      List<Pic> searchResultPics});
 
   $HomeContentCopyWith<$Res> get content;
   $PicPageDataCopyWith<$Res> get pageData;
@@ -63,7 +69,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? selectedPage = null,
     Object? selectedLimit = null,
     Object? isChangingPage = null,
+    Object? isInSearchMode = null,
+    Object? isSearchInProgress = null,
     Object? authorQuery = null,
+    Object? searchResultPics = null,
   }) {
     return _then(_value.copyWith(
       content: null == content
@@ -86,10 +95,22 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isChangingPage
           : isChangingPage // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInSearchMode: null == isInSearchMode
+          ? _value.isInSearchMode
+          : isInSearchMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearchInProgress: null == isSearchInProgress
+          ? _value.isSearchInProgress
+          : isSearchInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
       authorQuery: null == authorQuery
           ? _value.authorQuery
           : authorQuery // ignore: cast_nullable_to_non_nullable
               as String,
+      searchResultPics: null == searchResultPics
+          ? _value.searchResultPics
+          : searchResultPics // ignore: cast_nullable_to_non_nullable
+              as List<Pic>,
     ) as $Val);
   }
 
@@ -123,7 +144,10 @@ abstract class _$$_HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
       int selectedPage,
       int selectedLimit,
       bool isChangingPage,
-      String authorQuery});
+      bool isInSearchMode,
+      bool isSearchInProgress,
+      String authorQuery,
+      List<Pic> searchResultPics});
 
   @override
   $HomeContentCopyWith<$Res> get content;
@@ -147,7 +171,10 @@ class __$$_HomeStateCopyWithImpl<$Res>
     Object? selectedPage = null,
     Object? selectedLimit = null,
     Object? isChangingPage = null,
+    Object? isInSearchMode = null,
+    Object? isSearchInProgress = null,
     Object? authorQuery = null,
+    Object? searchResultPics = null,
   }) {
     return _then(_$_HomeState(
       content: null == content
@@ -170,10 +197,22 @@ class __$$_HomeStateCopyWithImpl<$Res>
           ? _value.isChangingPage
           : isChangingPage // ignore: cast_nullable_to_non_nullable
               as bool,
+      isInSearchMode: null == isInSearchMode
+          ? _value.isInSearchMode
+          : isInSearchMode // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearchInProgress: null == isSearchInProgress
+          ? _value.isSearchInProgress
+          : isSearchInProgress // ignore: cast_nullable_to_non_nullable
+              as bool,
       authorQuery: null == authorQuery
           ? _value.authorQuery
           : authorQuery // ignore: cast_nullable_to_non_nullable
               as String,
+      searchResultPics: null == searchResultPics
+          ? _value._searchResultPics
+          : searchResultPics // ignore: cast_nullable_to_non_nullable
+              as List<Pic>,
     ));
   }
 }
@@ -187,8 +226,12 @@ class _$_HomeState extends _HomeState {
       required this.selectedPage,
       required this.selectedLimit,
       required this.isChangingPage,
-      required this.authorQuery})
-      : super._();
+      required this.isInSearchMode,
+      required this.isSearchInProgress,
+      required this.authorQuery,
+      required final List<Pic> searchResultPics})
+      : _searchResultPics = searchResultPics,
+        super._();
 
   @override
   final HomeContent content;
@@ -201,11 +244,23 @@ class _$_HomeState extends _HomeState {
   @override
   final bool isChangingPage;
   @override
+  final bool isInSearchMode;
+  @override
+  final bool isSearchInProgress;
+  @override
   final String authorQuery;
+  final List<Pic> _searchResultPics;
+  @override
+  List<Pic> get searchResultPics {
+    if (_searchResultPics is EqualUnmodifiableListView)
+      return _searchResultPics;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchResultPics);
+  }
 
   @override
   String toString() {
-    return 'HomeState(content: $content, pageData: $pageData, selectedPage: $selectedPage, selectedLimit: $selectedLimit, isChangingPage: $isChangingPage, authorQuery: $authorQuery)';
+    return 'HomeState(content: $content, pageData: $pageData, selectedPage: $selectedPage, selectedLimit: $selectedLimit, isChangingPage: $isChangingPage, isInSearchMode: $isInSearchMode, isSearchInProgress: $isSearchInProgress, authorQuery: $authorQuery, searchResultPics: $searchResultPics)';
   }
 
   @override
@@ -222,13 +277,28 @@ class _$_HomeState extends _HomeState {
                 other.selectedLimit == selectedLimit) &&
             (identical(other.isChangingPage, isChangingPage) ||
                 other.isChangingPage == isChangingPage) &&
+            (identical(other.isInSearchMode, isInSearchMode) ||
+                other.isInSearchMode == isInSearchMode) &&
+            (identical(other.isSearchInProgress, isSearchInProgress) ||
+                other.isSearchInProgress == isSearchInProgress) &&
             (identical(other.authorQuery, authorQuery) ||
-                other.authorQuery == authorQuery));
+                other.authorQuery == authorQuery) &&
+            const DeepCollectionEquality()
+                .equals(other._searchResultPics, _searchResultPics));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, content, pageData, selectedPage,
-      selectedLimit, isChangingPage, authorQuery);
+  int get hashCode => Object.hash(
+      runtimeType,
+      content,
+      pageData,
+      selectedPage,
+      selectedLimit,
+      isChangingPage,
+      isInSearchMode,
+      isSearchInProgress,
+      authorQuery,
+      const DeepCollectionEquality().hash(_searchResultPics));
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +314,10 @@ abstract class _HomeState extends HomeState {
       required final int selectedPage,
       required final int selectedLimit,
       required final bool isChangingPage,
-      required final String authorQuery}) = _$_HomeState;
+      required final bool isInSearchMode,
+      required final bool isSearchInProgress,
+      required final String authorQuery,
+      required final List<Pic> searchResultPics}) = _$_HomeState;
   const _HomeState._() : super._();
 
   @override
@@ -258,7 +331,13 @@ abstract class _HomeState extends HomeState {
   @override
   bool get isChangingPage;
   @override
+  bool get isInSearchMode;
+  @override
+  bool get isSearchInProgress;
+  @override
   String get authorQuery;
+  @override
+  List<Pic> get searchResultPics;
   @override
   @JsonKey(ignore: true)
   _$$_HomeStateCopyWith<_$_HomeState> get copyWith =>

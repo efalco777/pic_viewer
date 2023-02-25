@@ -9,6 +9,8 @@ abstract class  LocaleKeys {
   static const pages_home_limit_label = 'pages.home.limit_label';
   static const pages_home_search_by_author_label = 'pages.home.search_by_author_label';
   static const pages_home_refresh_button_label = 'pages.home.refresh_button_label';
+  static const pages_home_search_button_label = 'pages.home.search_button_label';
+  static const pages_home_return_button_label = 'pages.home.return_button_label';
   static const pages_home = 'pages.home';
   static const pages = 'pages';
 

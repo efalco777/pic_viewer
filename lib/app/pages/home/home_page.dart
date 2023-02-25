@@ -15,6 +15,7 @@ import 'package:pic_viewer/app/widgets/image_placeholder.dart';
 import 'package:pic_viewer/app/widgets/simple_sliver_persistent_header_delegate.dart';
 import 'package:pic_viewer/app/widgets/spacing.dart';
 import 'package:pic_viewer/app/widgets/togglable_button_chip.dart';
+import 'package:pic_viewer/app/widgets/updatable_content.dart';
 import 'package:pic_viewer/generated/locale_keys.g.dart';
 
 part 'widgets/pic_sliver_grid.dart';
@@ -86,52 +87,71 @@ class _Loaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<HomeBloc>(context);
-    return Column(
-      children: [
-        Expanded(
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverPersistentHeader(
-                delegate: FixedHeaderDelegate(
-                  extend: 60,
-                  child: _LimitSelector(
-                    onLimitChanged: (value) => _debouncer.debounce(
-                      tag: 'limit_selection_debounce',
-                      duration: const Duration(milliseconds: 200),
-                      callback: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        bloc.onLimitChanged(value);
-                      },
+    return BlocSelector<HomeBloc, HomeState, bool>(
+      selector: (state) => state.isSearchInProgress,
+      builder: (context, isSearchInProgress) {
+        return UpdatableContent(
+          isUpdating: isSearchInProgress,
+          child: BlocSelector<HomeBloc, HomeState, bool>(
+            selector: (state) => state.isInSearchMode,
+            builder: (context, isInSearchMode) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: CustomScrollView(
+                      controller: _scrollController,
+                      slivers: [
+                        if (!isInSearchMode)
+                          SliverPersistentHeader(
+                            delegate: FixedHeaderDelegate(
+                              extend: 60,
+                              child: _LimitSelector(
+                                onLimitChanged: (value) => _debouncer.debounce(
+                                  tag: 'limit_selection_debounce',
+                                  duration: const Duration(milliseconds: 200),
+                                  callback: () {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    bloc.onLimitChanged(value);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        BlocSelector<HomeBloc, HomeState, String>(
+                          selector: (state) => state.authorQuery,
+                          builder: (context, query) {
+                            return SliverPersistentHeader(
+                              delegate: FixedHeaderDelegate(
+                                extend: 80,
+                                child: _SearchBar(
+                                  initialText: query,
+                                ),
+                              ),
+                              floating: true,
+                              pinned: false,
+                            );
+                          },
+                        ),
+                        SliverPadding(
+                          padding: Insets.normal.copyWith(top: Insets.small.top),
+                          sliver: const _PicSliverGrid(),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-              SliverPersistentHeader(
-                delegate: FixedHeaderDelegate(
-                  extend: 80,
-                  child: _SearchBar(
-                    onCancelSearch: bloc.onSearchCancelled,
-                    onSearch: bloc.onSearchByAuthor,
-                  ),
-                ),
-                floating: true,
-                pinned: false,
-              ),
-              SliverPadding(
-                padding: Insets.normal.copyWith(top: Insets.small.top),
-                sliver: const _PicSliverGrid(),
-              ),
-            ],
+                  if (!isInSearchMode)
+                    _PageSelector(
+                      onPageChanged: (value) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        bloc.onPageChanged(value);
+                      },
+                    ),
+                ],
+              );
+            },
           ),
-        ),
-        _PageSelector(
-          onPageChanged: (value) {
-            FocusManager.instance.primaryFocus?.unfocus();
-            bloc.onPageChanged(value);
-          },
-        ),
-      ],
+        );
+      },
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pic_viewer/app/common/extensions/string_extension.dart';
 import 'package:pic_viewer/app/model/pic/entity/pic.dart';
 
 part 'home_state.freezed.dart';
@@ -13,21 +12,19 @@ class HomeState with _$HomeState {
     required int selectedPage,
     required int selectedLimit,
     required bool isChangingPage,
+    required bool isInSearchMode,
+    required bool isSearchInProgress,
     required String authorQuery,
+    required List<Pic> searchResultPics,
   }) = _HomeState;
 
   List<Pic> get pics {
-    if (authorQuery.isNotEmpty) {
-      final query = authorQuery.toSearchQuery();
-      return pageData.pics.where((e) {
-        final author = e.author.toSearchQuery();
-        return author.contains(query);
-      }).toList();
+    if (isInSearchMode) {
+      return searchResultPics;
     }
     return pageData.pics;
   }
 
-  bool get isInSearchMode => authorQuery.isNotEmpty;
 }
 
 @freezed

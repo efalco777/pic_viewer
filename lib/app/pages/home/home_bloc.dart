@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pic_viewer/app/common/extensions/string_extension.dart';
 import 'package:pic_viewer/app/model/pic/entity/pic.dart';
 import 'package:pic_viewer/app/model/pic/pic_use_case.dart';
 import 'package:pic_viewer/app/pages/home/home_state.dart';
@@ -17,6 +18,9 @@ class HomeBloc extends Cubit<HomeState> {
             selectedLimit: Pic.minPageLimit,
             authorQuery: '',
             isChangingPage: false,
+            isSearchInProgress: false,
+            isInSearchMode: false,
+            searchResultPics: [],
           ),
         );
 
@@ -65,11 +69,52 @@ class HomeBloc extends Cubit<HomeState> {
     refresh(silent: true);
   }
 
-  void onSearchByAuthor(String authorQuery) {
-    emit(state.copyWith(authorQuery: authorQuery));
+  void onAuthorQueryChanged(String query) {
+    emit(state.copyWith(authorQuery: query));
+  }
+
+  Future<void> onSearchStarted() async {
+    emit(state.copyWith(
+      isSearchInProgress: true,
+      searchResultPics: [],
+    ));
+    try {
+      final List<Pic> matchedPics = [];
+      int page = 0;
+      while (true) {
+        final pageData = await _useCase.getPicPage(
+          limit: Pic.maxPageLimit,
+          page: page++,
+        );
+
+        final temp = pageData.pics.where((e) {
+          final author = e.author.toSearchQuery();
+          return author.contains(state.authorQuery.toSearchQuery());
+        }).toList();
+
+        matchedPics.addAll(temp);
+        if (!pageData.isNextPageAvailable) break;
+      }
+
+      emit(state.copyWith(
+        authorQuery: state.authorQuery,
+        searchResultPics: matchedPics,
+        isInSearchMode: true,
+        isSearchInProgress: false,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        content: const HomeContent.error(),
+      ));
+    }
   }
 
   void onSearchCancelled() {
-    emit(state.copyWith(authorQuery: ''));
+    emit(state.copyWith(
+      authorQuery: '',
+      searchResultPics: [],
+      isSearchInProgress: false,
+      isInSearchMode: false,
+    ));
   }
 }

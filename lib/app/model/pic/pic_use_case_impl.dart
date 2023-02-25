@@ -8,7 +8,7 @@ class PicUseCaseImpl implements PicUseCase {
   PicUseCaseImpl(this._repository);
 
   @override
-  Future<PicPageData> getPicPage({int page = 1, int limit = 30}) {
+  Future<PicPageData> getPicPage({required int page, required int limit}) {
     return _repository.getPicPage(page: page, limit: limit);
   }
 }
