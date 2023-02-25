@@ -1,5 +1,5 @@
 # Pic Viewer
-Project made for an assessment for Videoslots.
+Project made for an assesment for Videoslots.
 
 ## SDK 
 Flutter sdk version used: 3.7.5. 
