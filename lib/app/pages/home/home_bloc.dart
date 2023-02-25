@@ -14,7 +14,7 @@ class HomeBloc extends Cubit<HomeState> {
             content: HomeContent.loading(),
             pageData: PicPageData.empty,
             selectedPage: Pic.minPage,
-            selectedLimit: Pic.minLimit,
+            selectedLimit: Pic.minPageLimit,
             authorQuery: '',
             isChangingPage: false,
           ),
@@ -25,7 +25,7 @@ class HomeBloc extends Cubit<HomeState> {
       emit(state.copyWith(content: const HomeContent.loading()));
     }
     try {
-      final limit = reset ? Pic.minLimit : state.selectedLimit;
+      final limit = reset ? Pic.minPageLimit : state.selectedLimit;
       final page = reset ? Pic.minPage : state.selectedPage;
       final author = reset ? '' : state.authorQuery;
 

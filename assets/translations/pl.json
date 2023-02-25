@@ -3,7 +3,7 @@
         "home": {
             "app_bar_title": "Witaj w Pic Viewer!",
             "empty_message": "Ta strona jest pusta! Wciśnij przycisk poniżej aby odświeżyć lub zmień parametry strony.",
-            "empty_search_message": "Wygląda na to, że na tej stronie nie ma obrazków Twojego autora.",
+            "empty_search_message": "Wygląda na to, że na tej stronie nie ma obrazków twojego autora.",
             "error_message": "Ups! Coś poszło nie tak. Proszę odśwież stronę lub wróc później aby zobaczyć swoje obrazki!",
             "page_label": "Strona:",
             "limit_label": "Obrazki na stronę:",

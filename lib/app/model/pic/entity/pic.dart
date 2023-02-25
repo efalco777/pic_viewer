@@ -8,8 +8,8 @@ part 'pic.g.dart';
 class Pic with _$Pic {
   static const minPage = 1;
 
-  static const minLimit = 25;
-  static const maxLimit = 100;
+  static const minPageLimit = 25;
+  static const maxPageLimit = 100;
 
   const Pic._();
 

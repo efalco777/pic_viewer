@@ -28,7 +28,7 @@ class _LimitSelector extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   const Spacer(),
-                  for (int limit = Pic.minLimit; limit <= Pic.maxLimit; limit += 25) ...[
+                  for (int limit = Pic.minPageLimit; limit <= Pic.maxPageLimit; limit += 25) ...[
                     TogglableButtonChip<int>(
                       label: limit.toString(),
                       valueChanged: onLimitChanged,

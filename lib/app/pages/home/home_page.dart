@@ -53,7 +53,7 @@ class _HomeBody extends StatelessWidget {
             return content.when(
               loading: () => const _Loading(),
               loaded: () => _Loaded(),
-              error: () => _Error(onRefresh: BlocProvider.of<HomeBloc>(context).refresh),
+              error: () => const _Error(),
             );
           },
         ),
@@ -137,39 +137,39 @@ class _Loaded extends StatelessWidget {
 }
 
 class _Error extends StatelessWidget {
-  final VoidCallback onRefresh;
-
   const _Error({
     Key? key,
-    required this.onRefresh,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final HomeBloc bloc = BlocProvider.of(context);
 
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline_outlined,
-            color: Theme.of(context).colorScheme.error,
-            size: 42,
-          ),
-          Spacing.small,
-          Text(
-            LocaleKeys.pages_home_error_message.tr(),
-            textAlign: TextAlign.center,
-          ),
-          Spacing.normal,
-          ElevatedButton.icon(
-            onPressed: () => bloc.refresh(reset: true),
-            icon: const Icon(Icons.refresh),
-            label: Text(LocaleKeys.pages_home_refresh_button_label.tr()),
-          )
-        ],
+    return Padding(
+      padding: Insets.normal,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline_outlined,
+              color: Theme.of(context).colorScheme.error,
+              size: 42,
+            ),
+            Spacing.small,
+            Text(
+              LocaleKeys.pages_home_error_message.tr(),
+              textAlign: TextAlign.center,
+            ),
+            Spacing.normal,
+            ElevatedButton.icon(
+              onPressed: () => bloc.refresh(reset: true),
+              icon: const Icon(Icons.refresh),
+              label: Text(LocaleKeys.pages_home_refresh_button_label.tr()),
+            )
+          ],
+        ),
       ),
     );
   }
