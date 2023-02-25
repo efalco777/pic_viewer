@@ -16,7 +16,6 @@ part 'router.gr.dart';
     path: '/pic',
     page: PicDetailsPage,
     initial: true,
-    fullscreenDialog: true,
   ),
 ])
 class AppRouter extends _$AppRouter {}

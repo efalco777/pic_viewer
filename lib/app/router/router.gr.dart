@@ -31,7 +31,6 @@ class _$AppRouter extends RootStackRouter {
           key: args.key,
           pic: args.pic,
         ),
-        fullscreenDialog: true,
       );
     },
   };
