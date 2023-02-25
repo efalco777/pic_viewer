@@ -74,6 +74,9 @@ class HomeBloc extends Cubit<HomeState> {
   }
 
   Future<void> onSearchStarted() async {
+    final query = state.authorQuery.toSearchQuery();
+    if (query.isEmpty) return;
+
     emit(state.copyWith(
       isSearchInProgress: true,
       searchResultPics: [],
@@ -88,8 +91,7 @@ class HomeBloc extends Cubit<HomeState> {
         );
 
         final temp = pageData.pics.where((e) {
-          final author = e.author.toSearchQuery();
-          return author.contains(state.authorQuery.toSearchQuery());
+          return e.author.toSearchQuery().contains(query);
         }).toList();
 
         matchedPics.addAll(temp);
@@ -97,7 +99,6 @@ class HomeBloc extends Cubit<HomeState> {
       }
 
       emit(state.copyWith(
-        authorQuery: state.authorQuery,
         searchResultPics: matchedPics,
         isInSearchMode: true,
         isSearchInProgress: false,
