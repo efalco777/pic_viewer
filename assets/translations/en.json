@@ -1,0 +1,14 @@
+{
+    "pages": {
+        "home": {
+            "app_bar_title": "Welcome to Pic Viewer!",
+            "empty_message": "This page is empty! Press the below button to refresh or change your page parameters.",
+            "empty_search_message": "Looks like there are no pictures of Your author on this page.",
+            "error_message": "Woops! Something went wrong. Please refresh the page or come back later to see your pictures!",
+            "page_label": "Page:",
+            "limit_label": "Images per page:",
+            "search_by_author_label": "Search by author",
+            "refresh_button_label": "Refresh"
+        }
+    }
+}

@@ -1,16 +1,17 @@
-# pic_viewer
+# Pic Viewer
 
-A new Flutter project.
+Project made for an assessment for Videoslots.
 
-## Getting Started
+Flutter sdk version used: 3.7.5.
+Supported platforms: Android, iOS.
+## How to run
 
-This project is a starting point for a Flutter application.
+TERMINAL
+1. Go to root diretory,
+1. Input "flutter pub get",
+2. Input "flutter run". The "--profile", "--release" commands should work as well.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+VSCode
+1. Open project via "workspace.code-workspace",
+1. Either Input "flutter pub get" or open pubspec.yaml and get dependencies using VSCode ui,
+2. Run the application by one of the three run configurations available.

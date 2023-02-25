@@ -1,9 +1,9 @@
 {
   "folders": [
     {
-      "name": "🖼️ Pic Viewer",
+      "name": "🖼️ pic_viewer",
       "path": "."
-    },
+    }
   ],
   "settings": {
     "git.ignoreLimitWarning": true,

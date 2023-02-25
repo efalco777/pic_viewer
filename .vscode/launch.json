@@ -2,18 +2,18 @@
    "version": "0.1.0",
    "configurations": [
       {
-         "name": "Pic Viewer",
+         "name": "Run (debug)",
          "request": "launch",
          "type": "dart"
       },
       {
-         "name": "Pic Viewer (profile mode)",
+         "name": "Run (profile mode)",
          "request": "launch",
          "type": "dart",
          "flutterMode": "profile"
       },
       {
-         "name": "Pic Viewer (release mode)",
+         "name": "Run (release mode)",
          "request": "launch",
          "type": "dart",
          "flutterMode": "release"
