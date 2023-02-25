@@ -1,9 +1,16 @@
 # Pic Viewer
-
 Project made for an assessment for Videoslots.
 
-Flutter sdk version used: 3.7.5.
-Supported platforms: Android, iOS.
+## SDK 
+Flutter sdk version used: 3.7.5. 
+
+Note:
+If you're upgrading to this version you might need to delete "$FLUTTER_SDK/bin/cache" before executing "flutter pub get".
+I've upgraded to this version on two separate devices and each time "flutter pub get" would just hang until cache is deleted.
+
+## Supported platforms
+Android, iOS.
+
 ## How to run
 
 TERMINAL
