@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:pic_viewer/app/di/di.dart';
 import 'package:pic_viewer/app/model/pic/repository/api/pic_api.dart';
 import 'package:pic_viewer/app/model/pic/repository/pic_repository_impl.dart';
@@ -26,12 +27,21 @@ abstract class RepositoriesModule {
         receiveTimeout: timeout,
         contentType: ContentType.json.toString(),
       )
-      ..interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        compact: false,
-      ));
+      ..interceptors.addAll([
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          compact: false,
+        ),
+        DioCacheInterceptor(
+          options: CacheOptions(
+            policy: CachePolicy.forceCache,
+            maxStale: const Duration(minutes: 5),
+            store: MemCacheStore(),
+          ),
+        ),
+      ]);
   }
 }

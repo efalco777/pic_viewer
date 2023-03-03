@@ -1,5 +1,6 @@
 # Pic Viewer
-Project made for an assesment for Videoslots.
+Simple application written using open API: "https://picsum.photos/".
+Application allows the user to view the pictures, change page size & page limit size as well as searching for a picture by author's name.
 
 ## SDK 
 Flutter sdk version used: 3.7.5. 

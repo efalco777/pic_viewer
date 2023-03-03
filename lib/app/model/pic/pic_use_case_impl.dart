@@ -11,4 +11,9 @@ class PicUseCaseImpl implements PicUseCase {
   Future<PicPageData> getPicPage({required int page, required int limit}) {
     return _repository.getPicPage(page: page, limit: limit);
   }
+
+  @override
+  Future<List<Pic>> search({required String author}) {
+    return _repository.search(author: author);
+  }
 }

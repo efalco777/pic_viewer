@@ -82,24 +82,10 @@ class HomeBloc extends Cubit<HomeState> {
       searchResultPics: [],
     ));
     try {
-      final List<Pic> matchedPics = [];
-      int page = 0;
-      while (true) {
-        final pageData = await _useCase.getPicPage(
-          limit: Pic.maxPageLimit,
-          page: page++,
-        );
-
-        final temp = pageData.pics.where((e) {
-          return e.author.toSearchQuery().contains(query);
-        }).toList();
-
-        matchedPics.addAll(temp);
-        if (!pageData.isNextPageAvailable) break;
-      }
+      final pics = await _useCase.search(author: query);
 
       emit(state.copyWith(
-        searchResultPics: matchedPics,
+        searchResultPics: pics,
         isInSearchMode: true,
         isSearchInProgress: false,
       ));

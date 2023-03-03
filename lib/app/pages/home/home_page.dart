@@ -122,7 +122,7 @@ class _Loaded extends StatelessWidget {
                           builder: (context, query) {
                             return SliverPersistentHeader(
                               delegate: FixedHeaderDelegate(
-                                extend: 80,
+                                extend: 89,
                                 child: _SearchBar(
                                   initialText: query,
                                 ),

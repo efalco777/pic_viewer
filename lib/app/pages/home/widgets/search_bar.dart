@@ -34,64 +34,67 @@ class _SearchBarState extends State<_SearchBar> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: Insets.tiniest.top,
-            ),
+          Spacing.small,
+          SizedBox(
+            height: 56,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Spacing.small,
                 Expanded(
-                  child: BlocSelector<HomeBloc, HomeState, bool>(
-                    selector: (state) => state.isInSearchMode,
-                    builder: (context, isInSearchMode) {
-                      return SizedBox(
-                        height: 56,
-                        child: TextField(
-                          enabled: !isInSearchMode,
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            hintText: '${LocaleKeys.pages_home_search_by_author_label.tr()}...',
-                            prefixIcon: const Icon(Icons.search),
-                            filled: true,
-                            enabledBorder: _border,
-                            errorBorder: _border,
-                            focusedBorder: _border,
-                            border: _border,
-                            disabledBorder: _border,
-                            focusedErrorBorder: _border,
-                          ),
-                          onChanged: bloc.onAuthorQueryChanged,
-                        ),
-                      );
-                    },
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: '${LocaleKeys.pages_home_search_by_author_label.tr()}...',
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                      filled: true,
+                      enabledBorder: _border,
+                      errorBorder: _border,
+                      focusedBorder: _border,
+                      border: _border,
+                      disabledBorder: _border,
+                      focusedErrorBorder: _border,
+                      suffixIcon: _controller.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                FocusManager.instance.primaryFocus?.unfocus();
+                                _controller.text = '';
+                                bloc.onSearchCancelled();
+                              },
+                            )
+                          : null,
+                    ),
+                    onChanged: bloc.onAuthorQueryChanged,
                   ),
                 ),
                 Spacing.small,
-                BlocSelector<HomeBloc, HomeState, bool>(
-                  selector: (state) => state.isInSearchMode,
-                  builder: (context, isInSearchMode) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        FocusManager.instance.primaryFocus?.unfocus();
-                        if (isInSearchMode) {
-                          _controller.text = '';
-                          bloc.onSearchCancelled();
-                        } else {
-                          bloc.onSearchStarted();
-                        }
-                      },
-                      child: isInSearchMode
-                          ? Text(LocaleKeys.pages_home_return_button_label.tr())
-                          : Text(LocaleKeys.pages_home_search_button_label.tr()),
-                    );
+                GestureDetector(
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    bloc.onSearchStarted();
                   },
+                  child: Container(
+                    height: 42,
+                    width: 42,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.search,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      size: 30,
+                    ),
+                  ),
                 ),
                 Spacing.small,
               ],
             ),
           ),
+          Spacing.small,
           Divider(color: Colors.grey.withOpacity(0.1), height: 1, thickness: 1)
         ],
       ),
